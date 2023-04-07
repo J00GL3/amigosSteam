@@ -1,0 +1,1 @@
+Simple aplicación para visualizar la relación entre jugadores pegando el status de una partida de counter. 
