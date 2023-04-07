@@ -96,11 +96,11 @@ export default function Home() {
             <h1 className={styles.title}>Buscador de amigos comunes</h1>
             <form onSubmit={handleApikey}>
               <div className={styles.apikey}>
-              <h3>Api key 
+              <div> <h3>Api key </h3>
                 {
-                  apikey.length == 32 ? (<></>): (<a href="https://steamcommunity.com/dev/apikey" target='_blank' style={{display: "block", color: "blue"}}>Generar api key</a>)
+                  apikey?.length == 32 ? (<></>): (<a href="https://steamcommunity.com/dev/apikey" target='_blank' style={{display: "block", color: "blue"}}>Generar api key</a>)
                 }
-                </h3>
+                </div>
               </div>
         <input
         className={styles.textoInput}
