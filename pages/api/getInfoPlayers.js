@@ -26,24 +26,18 @@ export default async function handler(req, res)  {
     }
   }
 
-
-
-  console.log("steamIds: ", steamIds)
-
   const promises = steamIds.map((steamId, indicePeticion) => (
     axios.get(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.API_KEY}&steamids=${steamId.ids}`)
       .then(function(response) {
         const objeto_respueta = response.data.response.players;
         //console.log(objeto_respueta)
         busqueda.map( e => {
-          console.log("steamid numero:", objeto_respueta[0].steamid)
           objeto_respueta.map( objeto_respuesta => {
             if(objeto_respuesta.steamid == e.id64){
               objeto_respuesta.since = e.friend_since;
             }
           })
         })
-        console.log(objeto_respueta)
         return ({data:objeto_respueta})
       }
       )

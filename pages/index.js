@@ -16,14 +16,8 @@ export default function Home() {
   const [results, setResult] = useState([])
   const [info, setInfo] = useState([]) 
   const [comunes, setComunes] = useState([])
-  
-  
-  //console.log(api)
-
 
   async function manejarInformacionTabla(data){
-    console.log("Lo que envia al hacer click",data);
-
     const consulta  = data[2].map( e =>( {friend_since: e.friend_since, id64: e.steamid}))
 
     const infoAmpliada = await fetch('/api/getInfoPlayers', {
@@ -36,23 +30,7 @@ export default function Home() {
 
     const infoComunes = await infoAmpliada.json();
 
-    console.log(infoComunes);
-
     const elementos = [];
-
-    // const elementosComunes =  infoComunes.map( (e,i) => {
-    //   e.data.map( (jug,ind) => {
-    //       var desde;
-    //       jug.forEach(elem => {
-
-    //       })
-    //       jug.since = e.since[ind+100*i]
-    //       elementos[ind + 100 * i] = {data: jug}
-    //   })
-    // })
-
-    console.log("Elementos comunes", elementos)
-    console.log("Infocomunes",infoComunes)
 
     setComunes([data[0],data[1],infoComunes]);
   }
@@ -72,8 +50,6 @@ export default function Home() {
 
     const infoplayerJson = await infoplayers.json();
 
-    console.log("infoplayerJson",infoplayerJson)
-
     setInfo(infoplayerJson)
 
     const res = await fetch('/api/friendsList', {
@@ -84,7 +60,7 @@ export default function Home() {
       }
     })
     const data = await res.json();
-    console.log(data)
+
     setResult(data)
   }
   return (
@@ -114,7 +90,6 @@ export default function Home() {
             </div>
             
         
-      {/* {info.length > 0 ? (<h2 style={{textAlign: "center", margin: "20px 0 5px 0"}}>Tabla de amigos</h2>): (<></>)} */}
       <div className={styles.tabla}>
         <TablaPrueba info={[info, results]} onData={manejarInformacionTabla} />
         <TablaComunes info={comunes} />
