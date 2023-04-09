@@ -16,7 +16,7 @@ export default function Home() {
   const [comunes, setComunes] = useState([])
 
   async function manejarInformacionTabla(data){
-    const consulta  = data[2].map( e =>( {friend_since: e.friend_since, id64: e.steamid}))
+    const consulta  = data[2].map( e =>( {friend_since: e.friend_since, id64: e.steamid, friend_since_other: e.friend_since_other}))
 
     const infoAmpliada = await fetch('/api/getInfoPlayers', {
       method: 'POST',
@@ -28,15 +28,13 @@ export default function Home() {
 
     const infoComunes = await infoAmpliada.json();
 
-    const elementos = [];
-
     setComunes([data[0],data[1],infoComunes]);
   }
 
   async function handleSubmit (e) {
     e.preventDefault()
 
-    const busqueda = query.map( e=> {return {id64:e.steamid64, friend_since: 0}});
+    const busqueda = query.map( e=> {return {id64:e.steamid64, friend_since: 0, friend_since_other: 0}});
 
     const infoplayers = await fetch('/api/getInfoPlayers', {
       method: 'POST',

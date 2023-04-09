@@ -1,4 +1,3 @@
-// http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=4BACDD85BC89768CC033D865342BAA43&steamids=76561198080445934
 import axios from "axios";
 
 
@@ -12,17 +11,27 @@ export default async function handler(req, res)  {
   var steamIds = [];
 
   if(busqueda.length <= 100) {
-    steamIds.push({since: busqueda.map(e=> e.friend_since), ids: busqueda.map(e=> e.id64).join(","), id_array: busqueda.map(e=> e.id64)});
+    steamIds.push({
+      since: busqueda.map(e=> e.friend_since), 
+      since_other: busqueda.map(e=> e.friend_since_other), 
+      ids: busqueda.map(e=> e.id64).join(","), id_array: busqueda.map(e=> e.id64)});
   }
 
-  
 
   else {
     for (var parte = 0; parte < partes; parte++) {
-      steamIds.push({since: busqueda.slice(parte * 100, (parte + 1) * 100).map(e=> e.friend_since), ids: busqueda.slice(parte * 100, (parte + 1) * 100).map(e=> e.id64).join(","), id_array: busqueda.slice(parte * 100, (parte + 1) * 100).map(e=> e.id64)});
+      steamIds.push({
+        since: busqueda.slice(parte * 100, (parte + 1) * 100).map(e=> e.friend_since), 
+        since_other: busqueda.slice(parte * 100, (parte + 1) * 100).map(e=> e.friend_since_other), 
+        ids: busqueda.slice(parte * 100, (parte + 1) * 100).map(e=> e.id64).join(","), 
+        id_array: busqueda.slice(parte * 100, (parte + 1) * 100).map(e=> e.id64)});
     }
     if(resto > 0) {
-        steamIds.push({since: busqueda.slice(partes * 100, busqueda.length).map(e=>e.friend_since), ids: busqueda.slice(partes * 100, busqueda.length).map(e=> e.id64).join(","), id_array: busqueda.slice(partes * 100, busqueda.length).map(e=> e.id64)});
+        steamIds.push({
+          since: busqueda.slice(partes * 100, busqueda.length).map(e=>e.friend_since), 
+          since_other: busqueda.slice(partes * 100, busqueda.length).map(e=>e.friend_since_other),
+          ids: busqueda.slice(partes * 100, busqueda.length).map(e=> e.id64).join(","), 
+          id_array: busqueda.slice(partes * 100, busqueda.length).map(e=> e.id64)});
     }
   }
 
@@ -35,6 +44,7 @@ export default async function handler(req, res)  {
           objeto_respueta.map( objeto_respuesta => {
             if(objeto_respuesta.steamid == e.id64){
               objeto_respuesta.since = e.friend_since;
+              objeto_respuesta.since_other = e.friend_since_other;
             }
           })
         })
