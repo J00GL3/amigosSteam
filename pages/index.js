@@ -6,8 +6,6 @@ import { useState } from 'react'
 import tratamiento from '@/lib/tratamiento'
 import TablaPrueba from '@/lib/TablaPrueba'
 import TablaComunes from '@/lib/tablaComunes'
-import Cookies from 'js-cookie'
-import { parseCookies } from 'nookies'
 
 const inter = Inter({ subsets: ['latin'] })
 
