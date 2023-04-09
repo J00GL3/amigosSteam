@@ -2,10 +2,12 @@ import axios from "axios";
 
 export default async function handler(req, res) {
 
-  const {apikey, busqueda} = req.body
+  const busqueda = req.body
+
+  //console.log(busqueda)
 
   const promises = busqueda.map(steamId => (
-    axios.get(`http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${apikey}&steamid=${steamId.id64}&relationship=friend`)
+    axios.get(`http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${process.env.API_KEY}&steamid=${steamId.id64}&relationship=friend`)
       .then(response => ({
         steamId: steamId.id64,
         friendsCount: response.data.friendslist.friends.length,

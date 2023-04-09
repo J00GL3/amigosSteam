@@ -10,6 +10,48 @@ body {
   }
 
 html {
-    display: flex;
+    /* display: flex; */
     justify-content: center;
+}
+
+table {
+    /* border-collapse: collapse; */
+}
+
+td {
+    /* border: 1px solid black; */
+    background-color: rgba(99, 61, 131, 0.199);
+}
+
+td:nth-child(1) {
+    border:none;
+    background-color: transparent !important;
+}
+
+.tabla-amigos-comunes td {
+    background-color: transparent;
+    border: none;
+    width: 100px;
+    text-align: center;
+}
+
+.nombre {
+    background-color: dodgerblue;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.cabeza-amigos-comunes {
+    margin: 10px;
+    background-color: antiquewhite;
+    padding: 10px 0;
+}
+
+.letras-rojas {
+    color: red;
+}
+
+.letras-naranjas {
+    color: orange;
 }
