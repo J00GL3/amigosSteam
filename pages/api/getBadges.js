@@ -5,16 +5,16 @@ export default async function handler(req, res) {
   const busqueda = req.body
 
   const promises = busqueda.map(steamId => (
-    axios.get(`http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${process.env.API_KEY}&steamid=${steamId.id64}&relationship=friend`)
+    axios.get(`https://api.steampowered.com/IPlayerService/GetBadges/v1/?key=${process.env.API_KEY}&steamid=${steamId.id64}`)
       .then(response => ({
         steamId: steamId.id64,
-        friendsCount: response.data.friendslist.friends.length,
-        friends: response.data.friendslist.friends
+        badgesCount: response.data.response.badges.length,
+        steamLevel : response.data.response.player_level
       }))
       .catch(() => ({
         steamId: steamId.id64,
-        friendsCount: 0,
-        friends: []
+        badgesCount: 0,
+        steamLevel : 0
       }))
   ))
 

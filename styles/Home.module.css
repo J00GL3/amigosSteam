@@ -1,9 +1,4 @@
 .main {
-  /* display: flex; */
-  /* flex-direction: column; */
-  justify-content: space-between;
-  /* align-items: center; */
-  /* padding: 6rem; */
   min-height: 100vh;
 }
 
@@ -19,7 +14,7 @@
   position: relative;
   width: 300px;
   margin: auto;
-  border: 2px solid rgba(255, 199, 95, 0.199);
+  border: 4px solid rgb(179 215 245 / 35%);
 }
 
 .title {
@@ -28,6 +23,8 @@
 
 .tabla {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   height: 0;
 }
 
@@ -45,7 +42,8 @@
 {
   width: 100%;
   display: block;
-  margin: 5px auto;
+  background: #000036;
+  padding: 5px;
 }
 
 .buscar {
@@ -129,11 +127,8 @@
 }
 
 .center {
-  /* display: flex; */
   justify-content: center;
-  /* align-items: center; */
   position: relative;
-  /* padding: 4rem 0; */
 }
 
 .center::before {

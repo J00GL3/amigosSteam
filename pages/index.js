@@ -14,6 +14,9 @@ export default function Home() {
   const [results, setResult] = useState([])
   const [info, setInfo] = useState([]) 
   const [comunes, setComunes] = useState([])
+  const [badgesInfo, setBadgesInfo] = useState([])
+  const [gamesInfo, setGamesInfo] = useState([])
+  const [checkBans, setCheckBans] = useState([])
 
   async function manejarInformacionTabla(data){
     const consulta  = data[2].map( e =>( {friend_since: e.friend_since, id64: e.steamid, friend_since_other: e.friend_since_other}))
@@ -29,12 +32,25 @@ export default function Home() {
     const infoComunes = await infoAmpliada.json();
 
     setComunes([data[0],data[1],infoComunes]);
+
+    const checkBaneos = await fetch('/api/getPlayerBans', {
+      method: 'POST',
+      body: JSON.stringify(consulta),
+      headers: { 
+        "Content-Type": "application/json"
+      }
+    })
+
+    const checkBaneosJson = await checkBaneos.json();
+
+    setCheckBans(checkBaneosJson);
+
   }
 
   async function handleSubmit (e) {
     e.preventDefault()
 
-    const busqueda = query.map( e=> {return {id64:e.steamid64, friend_since: 0, friend_since_other: 0}});
+    const busqueda = query.map( e=> {return {id64:e.steamid64, friend_since: 0, friends_since_other: 0}});
 
     const infoplayers = await fetch('/api/getInfoPlayers', {
       method: 'POST',
@@ -46,7 +62,7 @@ export default function Home() {
 
     const infoplayerJson = await infoplayers.json();
 
-    setInfo(infoplayerJson)
+    setInfo(infoplayerJson);
 
     const res = await fetch('/api/friendsList', {
       method: 'POST',
@@ -58,7 +74,33 @@ export default function Home() {
     const data = await res.json();
 
     setResult(data)
+
+    const badges = await fetch('/api/getBadges', {
+      method: 'POST',
+      body: JSON.stringify(busqueda),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+
+    const badgesJson = await badges.json();
+
+    setBadgesInfo(badgesJson);
+
+    const games = await fetch('/api/getGames', {
+      method: 'POST',
+      body: JSON.stringify(busqueda),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+
+    const gamesJson = await games.json();
+
+    setGamesInfo(gamesJson);
+
   }
+
   return (
     <>
       <Head>
@@ -83,12 +125,13 @@ export default function Home() {
                 />
                 <button type="submit" className={styles.buscar}>Buscar</button>
               </form>
-            </div>
+              </div>
+            
             
         
       <div className={styles.tabla}>
-        <TablaPrueba info={[info, results]} onData={manejarInformacionTabla} />
-        <TablaComunes info={comunes} />
+        <TablaPrueba info={[info, results, badgesInfo, gamesInfo]} onData={manejarInformacionTabla} />
+        <TablaComunes info={comunes} baneados={checkBans}/>
       </div>
       
       </div>

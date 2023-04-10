@@ -39,7 +39,7 @@ export default async function handler(req, res)  {
     axios.get(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.API_KEY}&steamids=${steamId.ids}`)
       .then(function(response) {
         const objeto_respueta = response.data.response.players;
-        //console.log(objeto_respueta)
+
         busqueda.map( e => {
           objeto_respueta.map( objeto_respuesta => {
             if(objeto_respuesta.steamid == e.id64){
@@ -58,7 +58,7 @@ export default async function handler(req, res)  {
 
   Promise.all( promises )
     .then( results => {
-      //console.log("Resultado",results)
+
       res.status(200).json(results)
     })
     .catch(() => {
